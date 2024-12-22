@@ -203,6 +203,58 @@ void editContact()
     printf("\nKontak Tidak Ditemukan!\n");
 }
 
+void toLowerCase(char *str)
+{
+    for (int i = 0; str[i]; i++)
+    {
+        if (str[i] >= 'A' && str[i] <= 'Z')
+        {
+            str[i] += 32;
+        }
+    }
+}
+
+void searchContact()
+{
+    if (contactCount == 0)
+    {
+        printf("\nTidak Ada Kontak Untuk Dicari\n");
+        return;
+    }
+
+    char searchQuery[50];
+    printf("\nMasukkan Nama Untuk Mencari : ");
+    scanf(" %[^\n]", searchQuery);
+
+    toLowerCase(searchQuery);
+
+    int found = 0;
+    printf("\nHasil Pencarian:\n");
+    printf("+--------------------------------+-----------------+--------------------------------+\n");
+    printf("| %-30s | %-15s | %-30s |\n", "Nama", "Nomor Telepon", "Email");
+    printf("+--------------------------------+-----------------+--------------------------------+\n");
+
+    for (int i = 0; i < contactCount; i++)
+    {
+        char nameLower[50];
+        strncpy(nameLower, contacts[i].name, sizeof(nameLower));
+        toLowerCase(nameLower);
+
+        if (strstr(nameLower, searchQuery))
+        {
+            printf("| %-30s | %-15s | %-30s |\n", contacts[i].name, contacts[i].phone, contacts[i].email);
+            found = 1;
+        }
+    }
+
+    printf("+--------------------------------+-----------------+--------------------------------+\n");
+
+    if (!found)
+    {
+        printf("\nTidak Ada Kontak Yang Cocok Dengan Pencarian '%s'\n", searchQuery);
+    }
+}
+
 void showMenu()
 {
     // Data Kelompok
@@ -266,7 +318,7 @@ int main()
             break;
         case 5:
             system("cls");
-            printf("Cari Kontak");
+            searchContact();
             break;
         case 6:
             printf("\nKeluar...\n");
