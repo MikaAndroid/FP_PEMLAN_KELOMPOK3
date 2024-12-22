@@ -154,6 +154,55 @@ void addContact()
     saveContactsToFile();
 }
 
+void editContact()
+{
+    char name[50];
+    printf("\nMasukkan Nama Kontak Yang Ingin Diedit: ");
+    scanf(" %[^\n]", name);
+
+    for (int i = 0; i < contactCount; i++)
+    {
+        if (strcmp(contacts[i].name, name) == 0)
+        {
+            printf("\nMengedit Kontak: %s\n", contacts[i].name);
+
+            do
+            {
+                printf("Masukkan Nomor Telepon Baru (hanya angka): ");
+                scanf(" %[^\n]", contacts[i].phone);
+                if (!validatePhone(contacts[i].phone))
+                {
+                    printf("Nomor telepon tidak valid! Coba lagi.\n");
+                }
+                else
+                {
+                    break;
+                }
+            } while (1);
+
+            do
+            {
+                printf("Masukkan Email Baru (harus berakhiran @gmail.com): ");
+                scanf(" %[^\n]", contacts[i].email);
+                if (!validateEmail(contacts[i].email))
+                {
+                    printf("Email tidak valid! Coba lagi.\n");
+                }
+                else
+                {
+                    break;
+                }
+            } while (1);
+
+            printf("\nKontak %s Berhasil Diedit!\n", contacts[i].name);
+            saveContactsToFile();
+            return;
+        }
+    }
+
+    printf("\nKontak Tidak Ditemukan!\n");
+}
+
 void showMenu()
 {
     // Data Kelompok
