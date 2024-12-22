@@ -258,7 +258,7 @@ int main()
             break;
         case 3:
             system("cls");
-            printf("Edit Kontak");
+            editContact();
             break;
         case 4:
             system("cls");
