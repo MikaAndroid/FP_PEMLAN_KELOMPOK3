@@ -154,6 +154,26 @@ void addContact()
     saveContactsToFile();
 }
 
+void listContacts()
+{
+    if (contactCount == 0)
+    {
+        printf("\nBelum ada kontak !\n");
+        return;
+    }
+    
+    printf("\n+-----------------------+-----------------------+---------------------+\n");
+    printf("| %-30s | %-15s | %-30s |\n", "nama", "nomor telepon", "email");
+    printf("+-------------------------+-------------------------+-------------------+\n");
+
+    for (int i = 0; i< contactCount; i++)
+    {
+        printf("| %-30s | %-15s | %-30s |\n", contacts[i].name, contacts [i].phone, contacts[i].email);
+    }
+    
+    printf("+--------------------------------+----------------------------+----------+\n"\n);
+}
+
 void editContact()
 {
     char name[50];
@@ -195,6 +215,30 @@ void editContact()
             } while (1);
 
             printf("\nKontak %s Berhasil Diedit!\n", contacts[i].name);
+            saveContactsToFile();
+            return;
+        }
+    }
+
+    printf("\nKontak Tidak Ditemukan!\n");
+}
+
+void deleteContact()
+{
+    char name[50];
+    printf("\nMasukkan Nama Kontak Yang Ingin Dihapus: ");
+    scanf(" %[^\n]", name);
+
+    for (int i = 0; i < contactCount; i++)
+    {
+        if (strcmp(contacts[i].name, name) == 0)
+        {
+            printf("\nKontak %s Berhasil Dihapus!\n", contacts[i].name);
+            for (int j = i; j < contactCount - 1; j++)
+            {
+                contacts[j] = contacts[j + 1];
+            }
+            contactCount--;
             saveContactsToFile();
             return;
         }
